@@ -12,3 +12,6 @@
 
 # Ignore all .o
 *.o
+
+# Ignore a.out
+a.out
