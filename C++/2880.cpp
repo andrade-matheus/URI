@@ -2,23 +2,32 @@
 using namespace std;
 
 int main() {
-  vector<char> mensagem, crib;
   int i,j,n,m;
+  int cont;
+  bool match;
+  string mensagem, crib;
 
-  n = mensagem.size()
-  m = crib.size()
+  cont = 0;
+  mensagem = ' ';
+  crib = ' ';
+  match = false;
 
-  for (i = 0; i < n; i++) {
+  cin >> mensagem;
+  cin >> crib;
+
+  n = mensagem.size();
+  m = crib.size();
+
+  for (i = 0; i < n-(m-1); i++) {
     for (j = 0; j < m; j++) {
-      if (mensagem[i]) {
-        /* code */
-      } else {
-        /* code */
+      if(mensagem[(i+j)%n] == crib[j]){
+        match = true;
+        break;
       }
-      mensagem[i]
     }
+    if(!match) cont++;
+    match = false;
   }
-
-
+  cout << cont << '\n';
   return 0;
 }
