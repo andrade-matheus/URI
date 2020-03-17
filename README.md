@@ -1,3 +1,3 @@
 # Resoluçao de alguns problemas do URI.
 
-Um repositório somente para salvar os códigos feitos.
+Um repositório para salvar os códigos dos problemas resolvidos do URI.
