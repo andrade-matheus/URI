@@ -15,3 +15,6 @@
 
 # Ignore a.out
 a.out
+
+# Ignore all .exe
+*.exe
