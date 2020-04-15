@@ -1,12 +1,4 @@
 #include <iostream>
-#include <string>
-#include <vector>
-#include <set>
-#include <map>
-#include <stack>
-#include <queue>
-#include <cmath>
-#include <fstream>
 #include <climits>
 
 using namespace std;
@@ -25,13 +17,6 @@ typedef struct no{
 
 no arvoreSegmento[300000];
 int contas[100000];
-
-void imprime_no (no n){
-	cout << "SOMA: (" << n.soma.valor << ", " << n.soma.tamanho << ") " << endl;
-  cout << "SOMA_ESQ: (" << n.soma_esq.valor << ", " << n.soma_esq.tamanho << ") " << endl;
-  cout << "SOMA_DIR: (" << n.soma_dir.valor << ", " << n.soma_dir.tamanho << ") " << endl;
-  cout << "MAX: (" << n.max.valor << ", " << n.max.tamanho << ") " << endl;
-}
 
 no calculaNo(no esq, no dir){
   if (esq.soma.tamanho == -1) {
@@ -99,9 +84,6 @@ no calculaNo(no esq, no dir){
   aux.max.valor = INT_MIN;
   aux.max.tamanho = INT_MIN;
 
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
-
   if (aux.max.valor < esq.max.valor) {
     aux.max.valor = esq.max.valor;
     aux.max.tamanho = esq.max.tamanho;
@@ -109,18 +91,12 @@ no calculaNo(no esq, no dir){
     aux.max.tamanho = max(aux.max.tamanho, esq.max.tamanho);
   }
 
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
-
   if (aux.max.valor < dir.max.valor) {
     aux.max.valor = dir.max.valor;
     aux.max.tamanho = dir.max.tamanho;
   }else if (aux.max.valor == dir.max.valor) {
     aux.max.tamanho = max(aux.max.tamanho, dir.max.tamanho);
   }
-
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
 
   //Comparando Filho Esquerdo
   if (aux.max.valor < esq.soma.valor) {
@@ -130,9 +106,6 @@ no calculaNo(no esq, no dir){
     aux.max.tamanho = max(aux.max.tamanho, esq.soma.tamanho);
   }
 
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
-
   //Comparando Filho Direito
   if (aux.max.valor < dir.soma.valor) {
     aux.max.valor = dir.soma.valor;
@@ -140,9 +113,6 @@ no calculaNo(no esq, no dir){
   }else if (aux.max.valor == dir.soma.valor) {
     aux.max.tamanho = max(aux.max.tamanho, dir.soma.tamanho);
   }
-
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
 
   // Comparando Filho esquerdo + Filho esquerdo do Direito
   if (aux.max.valor < (esq.soma.valor + dir.soma_esq.valor)) {
@@ -152,9 +122,6 @@ no calculaNo(no esq, no dir){
     aux.max.tamanho = max(aux.max.tamanho, (esq.soma.tamanho + dir.soma_esq.tamanho));
   }
 
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
-
   // Comparando Filho direito + Filho direito do Esquerdo
   if (aux.max.valor < (dir.soma.valor + esq.soma_dir.valor)) {
     aux.max.valor = dir.soma.valor + esq.soma_dir.valor;
@@ -163,18 +130,12 @@ no calculaNo(no esq, no dir){
     aux.max.tamanho = max(aux.max.tamanho, (dir.soma.tamanho + esq.soma_dir.tamanho));
   }
 
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
-
   if (aux.max.valor < (esq.soma_dir.valor + dir.soma_esq.valor)) {
     aux.max.valor = esq.soma_dir.valor + dir.soma_esq.valor;
     aux.max.tamanho = esq.soma_dir.tamanho + dir.soma_esq.tamanho;
   }else if (aux.max.valor == (esq.soma_dir.valor + dir.soma_esq.valor)) {
     aux.max.tamanho = max(aux.max.tamanho, (esq.soma_dir.tamanho + dir.soma_esq.tamanho));
   }
-
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
 
   // Comparando a soma dos Filhos Direito e Esquerdo
   if (aux.max.valor < aux.soma.valor) {
@@ -184,23 +145,6 @@ no calculaNo(no esq, no dir){
     aux.max.tamanho = max(aux.max.tamanho, aux.soma.tamanho);
   }
 
-  // std::cout << '\n' << "NÓ_aux = " << '\n';
-  // imprime_no(aux);
-
-  return aux;
-}
-
-no noVazio(){
-  no aux;
-  aux.soma.valor = 0;
-  aux.soma.tamanho = -1;
-  aux.soma_esq.valor = 0;
-  aux.soma_esq.tamanho = -1;
-  aux.soma_dir.valor = 0;
-  aux.soma_dir.tamanho = -1;
-  aux.max.valor = 0;
-  aux.max.tamanho = -1;
-
   return aux;
 }
 
@@ -209,7 +153,16 @@ no consulta(int index_no, int esq, int dir, int A, int B){
 
   // Caso dê over (ou "under") flow.
   if((esq > dir) || (esq > B) || (dir < A)){
-    return noVazio();
+    no aux;
+    aux.soma.valor = 0;
+    aux.soma.tamanho = -1;
+    aux.soma_esq.valor = 0;
+    aux.soma_esq.tamanho = -1;
+    aux.soma_dir.valor = 0;
+    aux.soma_dir.tamanho = -1;
+    aux.max.valor = 0;
+    aux.max.tamanho = -1;
+    return aux;
   }
 
   if ((esq >= A) && (dir <= B)) {
@@ -218,12 +171,6 @@ no consulta(int index_no, int esq, int dir, int A, int B){
 
   no_esq = consulta(2*index_no+1, esq, (esq+dir)/2, A, B);
   no_dir = consulta(2*index_no+2, ((esq+dir)/2)+1, dir, A, B);
-
-  // std::cout << '\n' << "NÓ_ESQ = " << 2*index_no+1 << '\n';
-  // imprime_no(no_esq);
-  //
-  // std::cout << '\n' << "NÓ_DIR = " << 2*index_no+2 << '\n';
-  // imprime_no(no_dir);
 
   if (no_esq.soma.tamanho == -1) {
     return no_dir;
@@ -256,20 +203,6 @@ void criaArvoreSegmento(int index_no, int esq, int dir){
     arvoreSegmento[index_no] =  calculaNo(arvoreSegmento[2*index_no+1], arvoreSegmento[2*index_no+2]);
   }
 }
-
-void imprime (int N){
-  int fim;
-  fim = (int) ceil(log2(N));
-  fim = pow(2, fim+1);
-	for (int i=0; i<fim; i++){
-    std::cout << '\n' << "NÓ = " << i << '\n';
-    imprime_no(arvoreSegmento[i]);
-		// cout << '[' << i << " |#| " << arvoreSegmento[i].soma.valor << ']' << ' ';
-    // cout << endl;
-	}
-	cout << endl;
-}
-
 
 int main() {
   int T, N, Q, A, B;
